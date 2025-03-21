@@ -126,7 +126,7 @@ function attack(skill) {
         playerSkill: skill // 记录玩家使用的策略
     });
 
-    alert(`回合${currentRound}结束，本回合得分: ${score}`);
+    //alert(`回合${currentRound}结束，本回合得分: ${score}`);
 
     currentRound++;
     updateDisplay();

@@ -122,7 +122,7 @@ function angriff(fähigkeit) {
         spielerFähigkeit: fähigkeit // 记录玩家使用的策略
     });
 
-    alert(`Runde ${aktuelleRunde} beendet, Punkte in dieser Runde: ${punkte}`);
+    //alert(`Runde ${aktuelleRunde} beendet, Punkte in dieser Runde: ${punkte}`);
 
     aktuelleRunde++;
     aktualisiereAnzeige();
