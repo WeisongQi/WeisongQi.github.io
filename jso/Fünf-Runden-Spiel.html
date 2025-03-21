@@ -36,24 +36,24 @@
     <div class="game-container">
         <h1>Fünf-Runden-Spiel</h1>
         <div class="controls">
-            <button onclick="startGame()">Spiel starten</button>
+            <button onclick="spielStarten()">Spiel starten</button>
         </div>
         <div class="round-summary">
-            <p>Aktuelle Runde: <span id="currentRound">1</span></p>
-            <p>Aktuelle Gesamtpunktzahl des Spielers: <span id="playerScore">0</span></p>
-            <p>Zielstrategie: <span id="targetStrategy">-</span></p>
+            <p>Aktuelle Runde: <span id="aktuelleRunde">1</span></p>
+            <p>Aktuelle Gesamtpunktzahl des Spielers: <span id="spielerPunkte">0</span></p>
+            <p>Zielstrategie: <span id="zielStrategie">-</span></p>
         </div>
         <div class="controls">
-            <button onclick="attack('Schlagen')">Schlagen</button>
-            <button onclick="attack('Stechen')">Stechen</button>
-            <button onclick="attack('Verteidigung')">Verteidigung</button> <!-- 新增防守按钮 -->
+            <button onclick="angriff('Schlagen')">Schlagen</button>
+            <button onclick="angriff('Stechen')">Stechen</button>
+            <button onclick="angriff('Verteidigung')">Verteidigung</button> <!-- 新增防守按钮 -->
         </div>
-        <div id="roundHistory" class="round-details">
+        <div id="rundenVerlauf" class="round-details">
             <h3>Rundenprotokoll</h3>
-            <ul id="roundList"></ul>
+            <ul id="rundenListe"></ul>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script_de.js"></script>
 </body>
 </html>
