@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.game-container {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+}
+.controls {
+    margin: 20px 0;
+}
+button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+.round-summary {
+    margin: 20px 0;
+}
+.round-details {
+    margin: 10px 0;
+}

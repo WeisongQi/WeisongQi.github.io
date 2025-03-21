@@ -4,39 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fünf-Runden-Spiel</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .game-container {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        .controls {
-            margin: 20px 0;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 0 10px;
-            cursor: pointer;
-        }
-        .round-summary {
-            margin: 20px 0;
-        }
-        .round-details {
-            margin: 10px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="spiel.css">
 </head>
 <body>
+    <!-- 头部 -->
+    <header>
+        <h1>Weisong Qi</h1>
+        <p>From China; Henan Xuchhang; Enjoys reading history; Let's bug-free</p>
+        <a  href="./home_cn.html">CN</a>
+    </header>
+
+    <!-- 导航 -->
+    <nav>
+        <ul>
+            <li><a href="./home_cn.html">关于我</a></li>
+            <li><a href="./skills.html">Skills</a></li>
+            <li><a href="./projekt.html">Projekt</a></li>
+            <li><a href="./contact.html">Contact Me</a></li>
+        </ul>
+    </nav>
     <div class="game-container">
         <h1>Fünf-Runden-Spiel</h1>
         <div class="controls">
-            <button onclick="spielStarten()">Spiel starten</button>
+        <button onclick="spielStarten()">Spiel starten</button>
         </div>
         <div class="round-summary">
             <p>Aktuelle Runde: <span id="aktuelleRunde">1</span></p>
@@ -55,5 +46,25 @@
     </div>
 
     <script src="script_de.js"></script>
+    <!-- 联系 -->
+    <section id="contact">
+        <h2>contact</h2>
+        <div class="contact-info">
+            <p>📧 E-Mail: qiweisong@outlook.com</p>
+            <a href="./contact.html">Contact Me</a>
+            <p>📱 Phone: 0179-1234567</p>
+            <div class="social-links">
+                <a href="#" target="_blank">GitHub</a>
+                <a href="#" target="_blank">LinkedIn</a>
+                <a href="#" target="_blank">Twitter</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- 底部 -->
+<footer>
+    <p>&copy; 2025 Weisong Qi. All rights reserved.</p>
+</footer>
 </body>
 </html>
