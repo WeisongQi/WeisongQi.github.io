@@ -110,6 +110,11 @@ function angriff(fähigkeit) {
         spielerPunkte += punkte;
     }
 
+    // 当玩家使用防守时，目标的攻击策略无效，玩家总分不增加
+    if (spielerVerteidigung && zielStrategie === 'Angriff') {
+        spielerPunkte += 0; // 恢复因目标攻击而减少的分数
+    }
+
     rundenVerlauf.push({
         runde: aktuelleRunde,
         spielerPunkte: spielerPunkte,
