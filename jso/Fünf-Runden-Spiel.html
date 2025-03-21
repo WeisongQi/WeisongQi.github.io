@@ -12,22 +12,23 @@
     <header>
         <h1>Weisong Qi</h1>
         <p>From China; Henan Xuchhang; Enjoys reading history; Let's bug-free</p>
-        <a  href="./home_cn.html">CN</a>
+        <a  href="/home_cn.html">CN</a>
     </header>
 
     <!-- 导航 -->
     <nav>
         <ul>
-            <li><a href="./home_cn.html">关于我</a></li>
-            <li><a href="./skills.html">Skills</a></li>
-            <li><a href="./projekt.html">Projekt</a></li>
-            <li><a href="./contact.html">Contact Me</a></li>
+            <li><a href="/home_cn.html">关于我</a></li>
+            <li><a href="/skills.html">Skills</a></li>
+            <li><a href="/projekt.html">Projekt</a></li>
+            <li><a href="/contact.html">Contact Me</a></li>
+            <li><a href="五回合游戏.html">中文版游戏</a></li>
         </ul>
     </nav>
     <div class="game-container">
         <h1>Fünf-Runden-Spiel</h1>
         <div class="controls">
-        <button onclick="spielStarten()">Spiel starten</button>
+        <button onclick="spielStarten()" title="Ziel 8! 5 Runden! Angriff(-1 Punkt),Ausweichen (1/2 Punkt), Verteidigung(0 Punkt)">Spiel starten</button>
         </div>
         <div class="round-summary">
             <p>Aktuelle Runde: <span id="aktuelleRunde">1</span></p>
@@ -35,9 +36,9 @@
             <p>Zielstrategie: <span id="zielStrategie">-</span></p>
         </div>
         <div class="controls">
-            <button onclick="angriff('Schlagen')">Schlagen</button>
-            <button onclick="angriff('Stechen')">Stechen</button>
-            <button onclick="angriff('Verteidigung')">Verteidigung</button> <!-- 新增防守按钮 -->
+            <button onclick="angriff('Schlagen')" title="Schlagen(+1 Punkt)">Schlagen</button>
+            <button onclick="angriff('Stechen')" title="Stechen(+3 Punkt, nur 2 mal,nicht hintereinander.)">Stechen</button>
+            <button onclick="angriff('Verteidigung')" title="Verteidigung(kein Punkt verloren, nachst Angriff Punkt verdoppelt.)">Verteidigung</button> <!-- 新增防守按钮 -->
         </div>
         <div id="rundenVerlauf" class="round-details">
             <h3>Rundenprotokoll</h3>

@@ -12,21 +12,23 @@
         <header>
             <h1>齐玮嵩</h1>
             <p>来自中国，三国故里，汉末陪都。喜读经史，不觅封侯，但求有业。潜心编程，运转无虫。</p>
-            <a  href="./index.html">EN</a>
+            <a  href="/index.html">EN</a>
         </header>
 
         <!-- 导航 -->
         <nav>
             <ul>
-                <li><a href="./index.html">About Me</a></li>
-                <li><a href="./skills.html">职业技能</a></li>
-                <li><a href="./projekt.html">项目经历</a></li>
+                <li><a href="/index.html">About Me</a></li>
+                <li><a href="/skills.html">职业技能</a></li>
+                <li><a href="/projekt.html">项目经历</a></li>
+                <li><a href="/contact.html">Contact Me</a></li>
+                <li><a href="Fünf-Runden-Spiel.html">德文版游戏</a></li>
             </ul>
         </nav>
     <div class="game-container">
         <h1>五回合游戏</h1>
         <div class="controls">
-            <button onclick="startGame()">开始游戏</button>
+            <button onclick="startGame()" title="8分结束游戏！目标会攻击(-1分)，躲避(有几率减少得分)和防守(不得分)。">开始游戏</button>
         </div>
         <div class="round-summary">
             <p>当前回合: <span id="currentRound">1</span></p>
@@ -34,9 +36,9 @@
             <p>目标策略: <span id="targetStrategy">-</span></p>
         </div>
         <div class="controls">
-            <button onclick="attack('挥砍')">挥砍</button>
-            <button onclick="attack('刺击')">刺击</button>
-            <button onclick="attack('防守')">防守</button> <!-- 新增防守按钮 -->
+            <button onclick="attack('挥砍')" title="挥砍(+1分)">挥砍</button>
+            <button onclick="attack('刺击')" title="刺击(+3分)，一次游戏只限使用两次，不可以连续使用。">刺击</button>
+            <button onclick="attack('防守')" title="防守可以不失分，同时对下次攻击加倍。">防守</button> <!-- 新增防守按钮 -->
         </div>
         <div id="roundHistory" class="round-details">
             <h3>回合记录</h3>
