@@ -65,26 +65,69 @@ function resetGame() {
     updateDisplay();
 }
 
+function calculateScore(skill, targetStrategy) {
+    let score = 0;
+    if (targetStrategy === 'Verteidigung') {
+        score = 0;
+    } else if (targetStrategy === 'Ausweichen') {
+        if (Math.random() < 0.5) {
+            score = skill === 'Schlagen' ? 0.5 : 1.5;
+        } else {
+            score = skill === 'Schlagen' ? 1 : 3;
+        }
+    } else if (targetStrategy === 'Angriff') {
+        score = skill === 'Schlagen' ? 1 : 3;
+    }
+    return score;
+}
+
+function handleDefensiveStrategy() {
+    // 处理防守策略
+    return 0;
+}
+
+function handleDodgeStrategy(skill) {
+    // 处理躲避策略
+    let score = 0;
+    if (Math.random() < 0.5) {
+        score = skill === 'Schlagen' ? 0.5 : 1.5;
+    } else {
+        score = skill === 'Schlagen' ? 1 : 3;
+    }
+    return score;
+}
+
+function handleAttackStrategy(skill) {
+    // 处理攻击策略
+    let score = skill === 'Schlagen' ? 1 : 3;
+    if (skill === 'Stechen' || skill === 'Schlagen') {
+        playerScore -= 1; // 目标攻击时减少玩家分数1分
+    }
+    return score;
+}
+
 function attack(skill) {
-    if (currentRound > 5) return;
+    if (currentRound > 5) {
+        alert("Das Spiel ist vorbei!");
+        return;
+    }
 
     targetStrategy = selectTargetStrategy();
     let score = 0;
 
-    if (targetStrategy === 'Verteidigung') {
-        score = 0;
-    } else if (targetStrategy === 'Ausweichen') {
-        score = skill === 'Schlagen' ? (Math.random() < 0.5 ? 0.5 : 1) : (Math.random() < 0.5 ? 1.5 : 3);
-    } else if (targetStrategy === 'Angriff') {
-        if (skill === 'Stechen') {
-            playerScore -= 1; // 目标攻击时减少玩家分数1分
-            if (Math.random() < 0.5) {
-                playerScore -= 1; // 有50%几率再减少1分
-            }
-        } else if (skill === 'Schlagen') {
-            playerScore -= 1; // 目标攻击时减少玩家分数1分
-        }
-        score = skill === 'Schlagen' ? 1 : 3;
+    switch (targetStrategy) {
+        case 'Verteidigung':
+            score = handleDefensiveStrategy();
+            break;
+        case 'Ausweichen':
+            score = handleDodgeStrategy(skill);
+            break;
+        case 'Angriff':
+            score = handleAttackStrategy(skill);
+            break;
+        default:
+            score = 0;
+            break;
     }
 
     if (skill === 'Stechen') {
@@ -101,15 +144,20 @@ function attack(skill) {
     }
 
     if (skill === 'Verteidigung') {
-        playerDefense = true; // 玩家使用防守
+        playerDefense = true;
     } else {
         if (playerDefense) {
-            score *= 2; // 使用防守后的第一回合中攻击动作的得分加倍
-            playerDefense = false; // 第二回合消除效果
+            score *= 2;
+            playerDefense = false;
         }
         playerScore += score;
     }
 
+    if (playerDefense && targetStrategy === 'Angriff') {
+        playerScore += 0;
+    }
+
+    // 记录回合历史
     roundHistory.push({
         round: currentRound,
         playerScore: playerScore,
@@ -117,10 +165,16 @@ function attack(skill) {
         playerSkill: skill // 记录玩家使用的策略
     });
 
+    // 显示回合结束提示
     alert(`Runde ${currentRound} beendet, Punkte in dieser Runde: ${score}`);
 
+    // 增加当前回合号
     currentRound++;
+
+    // 更新显示
     updateDisplay();
+
+    // 检查胜利条件
     checkVictory();
 }
 

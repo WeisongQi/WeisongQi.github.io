@@ -27,26 +27,50 @@
     </nav>
     <div class="game-container">
         <h1>Fünf-Runden-Spiel</h1>
+        <p>Das Fünf-Runden-Spiel ist ein einfaches Strategiespiel, bei dem der Spieler in fünf Runden durch die Wahl verschiedener Strategien möglichst viele Punkte sammeln muss. Das Ziel des Spiels ist es, 8 oder mehr Punkte zu erreichen.</p>
+        <h2>Spielregeln</h2>
+        <ol>
+            <li>In jeder Runde kann der Spieler eine der folgenden drei Strategien wählen:
+                <ul>
+                    <li>Schlagen: +1 Punkt</li>
+                    <li>Stechen: +3 Punkte, aber nur zweimal pro Spiel und nicht hintereinander verwendbar.</li>
+                    <li>Verteidigung: Keine Punkte verloren, und der nächste Angriffspunkt wird verdoppelt.</li>
+                </ul>
+            </li>
+            <li>Das Ziel wählt zufällig eine der folgenden drei Strategien:
+                <ul>
+                    <li>Verteidigung: Der Spieler erhält keine Punkte.</li>
+                    <li>Ausweichen: Die Punkte des Spielers können reduziert werden.</li>
+                    <li>Angriff: Der Spieler verliert 1 Punkt.</li>
+                </ul>
+            </li>
+            <li>Das Spiel endet unter folgenden Bedingungen:
+                <ul>
+                    <li>Der Spieler erreicht 8 oder mehr Punkte und gewinnt.</li>
+                    <li>Fünf Runden sind vorbei und der Spieler hat weniger als 8 Punkte, der Spieler verliert.</li>
+                </ul>
+            </li>
+        </ol>
         <div class="controls">
-        <button onclick="spielStarten()" title="Ziel 8! 5 Runden! Angriff(-1 Punkt),Ausweichen (1/2 Punkt), Verteidigung(0 Punkt)">Spiel starten</button>
+            <button onclick="startGame()" title="Ziel 8! 5 Runden! Angriff(-1 Punkt),Ausweichen (1/2 Punkt), Verteidigung(0 Punkt)">Spiel starten</button>
         </div>
         <div class="round-summary">
-            <p>Aktuelle Runde: <span id="aktuelleRunde">1</span></p>
-            <p>Aktuelle Gesamtpunktzahl des Spielers: <span id="spielerPunkte">0</span></p>
-            <p>Zielstrategie: <span id="zielStrategie">-</span></p>
+            <p>Aktuelle Runde: <span id="currentRound">1</span></p>
+            <p>Aktuelle Gesamtpunktzahl des Spielers: <span id="playerScore">0</span></p>
+            <p>Zielstrategie: <span id="targetStrategy">-</span></p>
         </div>
         <div class="controls">
-            <button onclick="angriff('Schlagen')" title="Schlagen(+1 Punkt)">Schlagen</button>
-            <button onclick="angriff('Stechen')" title="Stechen(+3 Punkt, nur 2 mal,nicht hintereinander.)">Stechen</button>
-            <button onclick="angriff('Verteidigung')" title="Verteidigung(kein Punkt verloren, nachst Angriff Punkt verdoppelt.)">Verteidigung</button> <!-- 新增防守按钮 -->
+            <button onclick="attack('Schlagen')" title="Schlagen(+1 Punkt)">Schlagen</button>
+            <button onclick="attack('Stechen')" title="Stechen(+3 Punkt, nur 2 mal,nicht hintereinander.)">Stechen</button>
+            <button onclick="attack('Verteidigung')" title="Verteidigung(kein Punkt verloren, nachst Angriff Punkt verdoppelt.)">Verteidigung</button> <!-- 新增防守按钮 -->
         </div>
-        <div id="rundenVerlauf" class="round-details">
+        <div id="roundDetails" class="round-details">
             <h3>Rundenprotokoll</h3>
-            <ul id="rundenListe"></ul>
+            <ul id="roundList"></ul>
         </div>
     </div>
 
-    <script src="script_de.js"></script>
+    <script src="script.js"></script>
     <!-- 联系 -->
     <section id="contact">
         <h2>contact</h2>
@@ -61,7 +85,6 @@
             </div>
         </div>
     </section>
-</main>
 
 <!-- 底部 -->
 <footer>

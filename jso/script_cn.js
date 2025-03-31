@@ -82,9 +82,6 @@ function attack(skill) {
     } else if (targetStrategy === '攻击') {
         if (skill === '刺击') {
             playerScore -= 1; // 目标攻击时减少玩家分数1分
-            if (Math.random() < 0.5) {
-                playerScore -= 1; // 有50%几率再减少1分
-            }
         } else if (skill === '挥砍') {
             playerScore -= 1; // 目标攻击时减少玩家分数1分
         }
@@ -116,7 +113,7 @@ function attack(skill) {
 
     // 当玩家使用防守时，目标的攻击策略无效，玩家总分不增加
     if (playerDefense && targetStrategy === '攻击') {
-        playerScore += 0; // 恢复因目标攻击而减少的分数
+        playerScore += 0;
     }
 
     roundHistory.push({
