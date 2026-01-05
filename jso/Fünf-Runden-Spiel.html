@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fünf-Runden-Spiel</title>
-    <link rel="stylesheet" href="/style.css">
+    <meta name="description" content="Fünf-Runden-Spiel - Ein einfaches Strategiespiel von Weisong Qi. Erreiche 8 Punkte in 5 Runden.">
+    <title>Fünf-Runden-Spiel - Weisong Qi</title>
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="spiel.css">
 </head>
 <body>
@@ -12,16 +13,16 @@
     <header>
         <h1>Weisong Qi</h1>
         <p>From China; Henan Xuchhang; Enjoys reading history; Let's bug-free</p>
-        <a  href="/home_cn.html">CN</a>
+        <a href="../home_cn.html">CN</a>
     </header>
 
     <!-- 导航 -->
     <nav>
         <ul>
-            <li><a href="/home_cn.html">关于我</a></li>
-            <li><a href="/skills.html">Skills</a></li>
-            <li><a href="/projekt.html">Projekt</a></li>
-            <li><a href="/contact.html">Contact Me</a></li>
+            <li><a href="../home_cn.html">关于我</a></li>
+            <li><a href="../skills.html">Skills</a></li>
+            <li><a href="../projekt.html">Projekt</a></li>
+            <li><a href="../contact.html">Contact Me</a></li>
             <li><a href="五回合游戏.html">中文版游戏</a></li>
         </ul>
     </nav>
@@ -70,7 +71,44 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="game-core.js"></script>
+    <script>
+        // 初始化游戏
+        FiveRoundGame.init({
+            language: 'de'
+        });
+        
+        // 适配原有函数
+        function startGame() {
+            FiveRoundGame.reset();
+        }
+        
+        function attack(skill) {
+            const skillMap = {
+                'Schlagen': 'slash',
+                'Stechen': 'stab',
+                'Verteidigung': 'defend'
+            };
+            FiveRoundGame.attack(skillMap[skill] || skill);
+        }
+        
+        // 更新显示
+        window.updateGameDisplay = function(state, getString) {
+            document.getElementById('currentRound').textContent = state.currentRound;
+            document.getElementById('playerScore').textContent = state.playerScore;
+            
+            // 更新回合历史
+            const roundList = document.getElementById('roundList');
+            roundList.innerHTML = state.roundHistory.map(entry => `
+                <li>
+                    Runde ${entry.round}：
+                    Spieler Gesamtpunktzahl: ${entry.playerScore} Punkte
+                    Zielstrategie: ${entry.targetStrategy}
+                    Spielerstrategie: ${entry.playerSkill}
+                </li>
+            `).join('');
+        };
+    </script>
     <!-- 联系 -->
     <section id="contact">
         <h2>contact</h2>

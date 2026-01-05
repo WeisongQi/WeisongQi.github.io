@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>五回合游戏</title>
-    <link rel="stylesheet" href="/style.css">
+    <meta name="description" content="五回合游戏 - 齐玮嵩开发的简单策略游戏。在五回合内获得8分即可获胜。">
+    <title>五回合游戏 - 齐玮嵩</title>
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="spiel.css">
 </head>
 <body>
@@ -12,16 +13,16 @@
         <header>
             <h1>齐玮嵩</h1>
             <p>来自中国，三国故里，汉末陪都。喜读经史，不觅封侯，但求有业。潜心编程，运转无虫。</p>
-            <a  href="/index.html">EN</a>
+            <a href="../index.html">EN</a>
         </header>
 
         <!-- 导航 -->
         <nav>
             <ul>
-                <li><a href="/index.html">About Me</a></li>
-                <li><a href="/skills.html">职业技能</a></li>
-                <li><a href="/projekt.html">项目经历</a></li>
-                <li><a href="/contact.html">Contact Me</a></li>
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../skills.html">职业技能</a></li>
+                <li><a href="../projekt.html">项目经历</a></li>
+                <li><a href="../contact.html">Contact Me</a></li>
                 <li><a href="Fünf-Runden-Spiel.html">德文版游戏</a></li>
             </ul>
         </nav>
@@ -46,7 +47,44 @@
         </div>
     </div>
 
-    <script src="script_cn.js"></script>
+    <script src="game-core.js"></script>
+    <script>
+        // 初始化游戏
+        FiveRoundGame.init({
+            language: 'cn'
+        });
+        
+        // 适配原有函数
+        function startGame() {
+            FiveRoundGame.reset();
+        }
+        
+        function attack(skill) {
+            const skillMap = {
+                '挥砍': 'slash',
+                '刺击': 'stab',
+                '防守': 'defend'
+            };
+            FiveRoundGame.attack(skillMap[skill] || skill);
+        }
+        
+        // 更新显示
+        window.updateGameDisplay = function(state, getString) {
+            document.getElementById('currentRound').textContent = state.currentRound;
+            document.getElementById('playerScore').textContent = state.playerScore;
+            
+            // 更新回合历史
+            const roundList = document.getElementById('roundList');
+            roundList.innerHTML = state.roundHistory.map(entry => `
+                <li>
+                    回合${entry.round}：
+                    玩家总分: ${entry.playerScore}分
+                    目标策略: ${entry.targetStrategy}
+                    玩家策略: ${entry.playerSkill}
+                </li>
+            `).join('');
+        };
+    </script>
     <!-- 联系 -->
     <section id="contact">
         <h2>联系方式</h2>
