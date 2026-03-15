@@ -1,78 +1,62 @@
 /**
- * 联系表单验证
+ * 联系表单验证和提交处理
+ * 支持 Formspree 后端服务
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form');
+    const form = document.getElementById('contact-form');
     if (!form) return;
     
-    const lastNameInput = document.getElementById('lastname');
+    const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
-    const messageTextarea = document.querySelector('textarea');
-    const submitButton = form.querySelector('input[type="submit"]');
+    const messageInput = document.getElementById('message');
+    const subjectInput = document.getElementById('subject');
+    const submitBtn = document.getElementById('submit-btn');
+    const formStatus = document.getElementById('form-status');
+    const charCount = document.getElementById('char-count');
     
-    // 简单的邮箱验证函数
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+    // 邮箱验证正则
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    // 显示字段错误
+    function showFieldError(input, message) {
+        const errorEl = document.getElementById(`${input.id}-error`);
+        if (errorEl) {
+            errorEl.textContent = message;
+        }
+        input.classList.add('invalid');
+        input.setAttribute('aria-invalid', 'true');
     }
     
-    // 显示错误消息
-    function showError(input, message) {
-        const fieldset = input.closest('fieldset');
-        let errorElement = fieldset.querySelector('.error-message');
-        
-        if (!errorElement) {
-            errorElement = document.createElement('div');
-            errorElement.className = 'error-message';
-            errorElement.style.color = 'red';
-            errorElement.style.fontSize = '0.9em';
-            errorElement.style.marginTop = '5px';
-            fieldset.appendChild(errorElement);
+    // 清除字段错误
+    function clearFieldError(input) {
+        const errorEl = document.getElementById(`${input.id}-error`);
+        if (errorEl) {
+            errorEl.textContent = '';
         }
-        
-        errorElement.textContent = message;
-        input.style.borderColor = 'red';
-    }
-    
-    // 清除错误消息
-    function clearError(input) {
-        const fieldset = input.closest('fieldset');
-        const errorElement = fieldset.querySelector('.error-message');
-        
-        if (errorElement) {
-            errorElement.remove();
-        }
-        
-        input.style.borderColor = '';
+        input.classList.remove('invalid');
+        input.setAttribute('aria-invalid', 'false');
     }
     
     // 验证单个字段
     function validateField(input) {
-        clearError(input);
+        clearFieldError(input);
+        const value = input.value.trim();
         
-        if (input.hasAttribute('required') && !input.value.trim()) {
-            showError(input, '此字段为必填项');
+        if (input.hasAttribute('required') && !value) {
+            showFieldError(input, 'This field is required');
             return false;
         }
         
-        if (input.type === 'email' && input.value.trim() && !isValidEmail(input.value.trim())) {
-            showError(input, '请输入有效的电子邮件地址');
+        if (input.type === 'email' && value && !emailRegex.test(value)) {
+            showFieldError(input, 'Please enter a valid email address');
             return false;
         }
         
-        if (input.tagName === 'TEXTAREA') {
+        if (input.id === 'message') {
             const minLength = parseInt(input.getAttribute('minlength')) || 10;
-            const maxLength = parseInt(input.getAttribute('maxlength')) || 50;
-            const value = input.value.trim();
-            
             if (value.length < minLength) {
-                showError(input, `消息长度至少为 ${minLength} 个字符`);
-                return false;
-            }
-            
-            if (value.length > maxLength) {
-                showError(input, `消息长度不能超过 ${maxLength} 个字符`);
+                showFieldError(input, `Message must be at least ${minLength} characters`);
                 return false;
             }
         }
@@ -80,35 +64,112 @@ document.addEventListener('DOMContentLoaded', function() {
         return true;
     }
     
+    // 显示表单状态
+    function showFormStatus(message, type) {
+        formStatus.textContent = message;
+        formStatus.className = `form-status ${type}`;
+        formStatus.style.display = 'block';
+        
+        // 滚动到状态消息
+        formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    // 设置按钮加载状态
+    function setLoading(isLoading) {
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        
+        if (isLoading) {
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline-flex';
+            submitBtn.disabled = true;
+        } else {
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
+        }
+    }
+    
+    // 字符计数
+    if (messageInput && charCount) {
+        messageInput.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            charCount.parentElement.style.color = count > 900 ? '#e74c3c' : '';
+        });
+    }
+    
     // 实时验证
-    [lastNameInput, emailInput, messageTextarea].forEach(input => {
+    [nameInput, emailInput, messageInput].forEach(input => {
         if (input) {
             input.addEventListener('blur', function() {
                 validateField(this);
             });
             
             input.addEventListener('input', function() {
-                clearError(this);
+                clearFieldError(this);
             });
         }
     });
     
-    // 表单提交验证
-    form.addEventListener('submit', function(event) {
+    // 表单提交
+    form.addEventListener('submit', async function(event) {
         event.preventDefault();
         
+        // 验证所有必填字段
         let isValid = true;
+        [nameInput, emailInput, messageInput].forEach(input => {
+            if (input && !validateField(input)) {
+                isValid = false;
+            }
+        });
         
-        if (!validateField(lastNameInput)) isValid = false;
-        if (!validateField(emailInput)) isValid = false;
-        if (!validateField(messageTextarea)) isValid = false;
+        if (!isValid) {
+            showFormStatus('Please correct the errors above', 'error');
+            return;
+        }
         
-        if (isValid) {
-            // 简单成功提示
-            alert('感谢您的留言！我会尽快回复。');
-            form.reset();
-        } else {
-            alert('请检查表单中的错误');
+        // 检查是否配置了 Formspree
+        const formAction = form.getAttribute('action');
+        if (formAction.includes('YOUR_FORM_ID')) {
+            showFormStatus(
+                'Form backend not configured. Please replace YOUR_FORM_ID in the form action with your Formspree form ID. See comments in contact.html for instructions.',
+                'warning'
+            );
+            return;
+        }
+        
+        // 提交表单
+        setLoading(true);
+        formStatus.style.display = 'none';
+        
+        try {
+            const formData = new FormData(form);
+            
+            const response = await fetch(formAction, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                showFormStatus('Thank you! Your message has been sent successfully. I will get back to you soon.', 'success');
+                form.reset();
+                if (charCount) charCount.textContent = '0';
+            } else {
+                const data = await response.json();
+                throw new Error(data.error || 'Failed to send message');
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            showFormStatus(
+                'Sorry, there was an error sending your message. Please try again or email me directly at contact@6699366.xyz',
+                'error'
+            );
+        } finally {
+            setLoading(false);
         }
     });
 });

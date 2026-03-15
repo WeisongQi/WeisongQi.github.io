@@ -10,8 +10,8 @@
 <body>
     <header>
         <h1>Weisong Qi</h1>
-        <p>From China; Henan Xuchhang; Enjoys reading history; Let's bug-free</p>
-        <a  href="./home_cn.html">CN</a>
+        <p>From China; Henan Xuchchang; Enjoys reading history; Let's bug-free</p>
+        <a href="./home_cn.html">CN</a>
     </header>
 
     <!-- 导航 -->
@@ -24,51 +24,87 @@
         </ul>
     </nav>
 
-    <p>
-        <ul>
-            <li>Datenschutz und Verwendung von Daten Auf meiner Webseite werden möglicherweise personenbezogene Daten wie E-Mail-Adressen oder Telefonnummern gesammelt. Ich stelle sicher, dass diese Sammlung und Nutzung in Übereinstimmung mit der Datenschutz-Grundverordnung (DSGVO) erfolgt.
-            </li>
-            <li>Verwendung der Daten Die gesammelten Informationen werden ausschließlich verwendet, um auf Anfragen zu reagieren, Dienstleistungen bereitzustellen oder die Kommunikation zu erleichtern. Eine Weitergabe der Daten an Dritte erfolgt nur mit ausdrücklicher Zustimmung.
-            </li>
-            <li>Datenschutzrichtlinie Für detaillierte Informationen darüber, wie Ihre Daten gesammelt, gespeichert und verwendet werden, lesen Sie bitte unsere Datenschutzrichtlinie. Dort finden Sie alle wichtigen Informationen gemäß den gesetzlichen Anforderungen.
-            </li>
-        </ul>
-    </p>
-    <form>
-        <fieldset>
-          <legend>Contact Me:</legend>
-          <br />
-          <label for="lastname">Nachname:</label>
-          <input id="lastname" type="text" required />
-          <br />
-          <br />
-          <label for="email">E-Mail:</label>
-          <input id="email" type="email" placeholder="xxx@yyy.zzz" />
-          <br />
-          <br />
-          <br />
-          <textarea cols="30" rows="10" maxlength="50" minlength="10" placeholder="50 Zeichen"></textarea>
-            <br />
-            <br />
-          <input type="submit" />
-          <br />
-          <br />
-          <p>Meine bevorzugten Kontaktzeiten sind werktags von 9:00 bis 17:00 Uhr. Während dieser Zeiten stehe ich für Ihre Anfragen zur Verfügung.</p>
-          <br />
-          <br />
-          <p>Ich befinde mich in der Mitteleuropäischen Zeitzone (CET, UTC+1) im Winter und in der Mitteleuropäischen Sommerzeit (CEST, UTC+2) im Sommer. <br>
-            Bitte denken Sie daran, diese Zeitunterschiede zu berücksichtigen, wenn Sie außerhalb Europas kontaktieren.</p>
-          <br />
-          <br />
-          <p>Ich bemühe mich, auf Nachrichten innerhalb von 24 Stunden zu antworten. Vielen Dank für Ihr Verständnis!</p>
-        </fieldset>
-      </form>
+    <main>
+        <!-- 隐私政策 -->
+        <section class="privacy-notice">
+            <h2>Privacy Policy</h2>
+            <ul>
+                <li><strong>Data Collection:</strong> Personal data such as email addresses may be collected on this website. I ensure that this collection and use complies with the General Data Protection Regulation (GDPR).</li>
+                <li><strong>Data Usage:</strong> The collected information is used exclusively to respond to inquiries, provide services, or facilitate communication. Data will not be shared with third parties without express consent.</li>
+                <li><strong>Privacy Policy:</strong> For detailed information on how your data is collected, stored, and used, please read our privacy policy.</li>
+            </ul>
+        </section>
 
-      <script src="contact.js"></script>
-      
-      <!-- 底部 -->
+        <!-- 联系表单 -->
+        <section class="contact-form-section">
+            <h2>Contact Me</h2>
+            
+            <!-- 状态消息 -->
+            <div id="form-status" class="form-status" role="alert" aria-live="polite"></div>
+            
+            <!-- 
+                Formspree 集成说明:
+                1. 访问 https://formspree.io 注册账号
+                2. 创建新表单，获取表单端点（如 https://formspree.io/f/xxxxx）
+                3. 将下方 action 属性中的 YOUR_FORM_ID 替换为你的表单ID
+            -->
+            <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <input type="hidden" name="_replyto" value="">
+                <input type="text" name="_gotcha" style="display:none">
+                
+                <div class="form-group">
+                    <label for="name">Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required placeholder="Your name" autocomplete="name">
+                    <span class="error-text" id="name-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="your@email.com" autocomplete="email">
+                    <span class="error-text" id="email-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="What is this about?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message <span class="required">*</span></label>
+                    <textarea id="message" name="message" rows="6" required minlength="10" maxlength="1000" placeholder="Your message (minimum 10 characters)"></textarea>
+                    <span class="char-count"><span id="char-count">0</span>/1000</span>
+                    <span class="error-text" id="message-error"></span>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" id="submit-btn" class="btn-primary">
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-loading" style="display:none;">
+                            <span class="spinner"></span> Sending...
+                        </span>
+                    </button>
+                    <button type="reset" class="btn-secondary">Clear</button>
+                </div>
+            </form>
+            
+            <!-- 联系信息 -->
+            <div class="contact-info-block">
+                <h3>Direct Contact</h3>
+                <p><strong>Email:</strong> <a href="mailto:contact@6699366.xyz">contact@6699366.xyz</a></p>
+                <div class="availability">
+                    <h4>Availability</h4>
+                    <p>Weekdays: 9:00 - 17:00 (CET/CEST)</p>
+                    <p>Response time: Within 24 hours</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部 -->
     <footer>
-      <p>&copy; 2025 Weisong Qi. All rights reserved.</p>
-  </footer>
+        <p>&copy; 2025 Weisong Qi. All rights reserved.</p>
+    </footer>
+
+    <script src="contact.js"></script>
 </body>
 </html>
